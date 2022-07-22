@@ -1,18 +1,31 @@
 <template>
-  <div class="flex items-center w-full">
+  <div
+    class="flex items-center w-full bg-white p-4 rounded-md shadow-sm cursor-pointer"
+  >
     <input
       type="checkbox"
-      class="h-5 w-5 mr-4 focus:outline-none rounded-sm"
+      class="h-5 w-5 mr-4 focus:outline-none rounded-sm cursor-pointer"
       :id="'todo' + todo.id"
       :checked="todo.done ? true : false"
+      @change="toggleTodo"
     />
-    <label class="text-lg flex-2" :for="'todo' + todo.id">
+    <label
+      class="text-lg flex-2 cursor-pointer"
+      :for="'todo' + todo.id"
+      :class="todo.done ? 'line-through' : null"
+    >
       {{ todo.content }}
     </label>
+    <div v-if="formatDate" class="bg-light-grey px-3 py-2 radius-md ml-4">
+      {{ formatDate }}
+    </div>
   </div>
 </template>
 
 <script>
+import timeConverter from "@/helpers/dateTimehelper";
+import store from "@/store";
+
 export default {
   props: {
     todo: {
@@ -20,8 +33,19 @@ export default {
       type: Object,
     },
   },
-  setup() {
-    return {};
+  setup(props) {
+    let formatDate;
+    if (props.todo.date) {
+      formatDate = timeConverter(props.todo.date);
+    }
+
+    const toggleTodo = () => {
+      store.commit("updateStatus", {
+        id: props.todo.id,
+      });
+    };
+
+    return { formatDate, toggleTodo };
   },
 };
 </script>
