@@ -10,8 +10,6 @@
 
     <TodoForm />
 
-    <hr />
-
     <TodoList />
   </div>
 </template>

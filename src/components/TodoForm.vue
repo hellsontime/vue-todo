@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addTodo" class="mb-8 relative">
+  <form @submit.prevent="addTodo" class="mb-6 relative">
     <input
       v-model="newTodo.content"
       id="newTodo"
