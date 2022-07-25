@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import timeConverter from "@/helpers/dateTimehelper";
+import { timeConverter } from "@/helpers/dateTimeHelper";
 import store from "@/store";
 
 export default {
