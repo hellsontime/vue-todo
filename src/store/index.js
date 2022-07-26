@@ -18,23 +18,25 @@ const store = createStore({
     },
     fetchAllSortByCreatedAt(state) {
       return state.todos.sort((a, b) =>
-        (Date.parse(a.created_at) > Date.parse(b.created_at) ? 1 : -1)
+        (Date.parse(a.created_at) < Date.parse(b.created_at) ? 1 : -1)
       );
     },
     fetchAllSortByUpdatedAt(state) {
       return state.todos.sort((a, b) =>
-        (Date.parse(a.updated_at) > Date.parse(b.updated_at) ? 1 : -1)
+        (Date.parse(a.updated_at) < Date.parse(b.updated_at) ? 1 : -1)
       );
     },
   },
   mutations: {
     add(state, { userId, content, date }) {
-      state.todos.push({
+      state.todos.unshift({
         id: uid(),
         userId,
         content,
         done: false,
         date,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
     },
     updateStatus(state, { id }) {
