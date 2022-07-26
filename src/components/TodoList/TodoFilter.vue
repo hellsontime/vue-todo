@@ -4,9 +4,13 @@
       <p class="mx-2">Filter</p>
       <select
         class="bg-white py-2 px-3 rounded-md appearance-none focus:outline-none pr-6"
+        id="filter"
+        @change="sortAndFilter"
       >
-        <option value="">All</option>
-        <option value="">With date</option>
+        <option value="filterAll">All</option>
+        <option value="filterDate">With date</option>
+        <option value="filterDone">Done</option>
+        <option value="filterNotDone">Not Done</option>
       </select>
       <div class="absolute right-2 flex flex-col text-grey">
         <fa icon="fa-solid fa-sort" />
@@ -16,7 +20,8 @@
       <p class="mx-2">Sort</p>
       <select
         class="bg-white py-2 px-3 rounded-md appearance-none focus:outline-none pr-6"
-        @change="sort"
+        id="sort"
+        @change="sortAndFilter"
       >
         <option value="sortAdded">Added date</option>
         <option value="sortUpdated">Updated date</option>
@@ -40,16 +45,37 @@ export default {
     updateTodos: {},
   },
   setup(props) {
-    const sort = (e) => {
-      if (e.target.value === "sortAdded") {
-        props.updateTodos(store.getters.fetchAllSortByCreatedAt);
+    const sortAndFilter = () => {
+      let filterValue = document.querySelector("#filter").value;
+      let sortValue = document.querySelector("#sort").value;
+      let updated;
+
+      switch (sortValue) {
+        case "sortAdded":
+          updated = store.getters.fetchAllSortByCreatedAt;
+          break;
+        case "sortUpdated":
+          updated = store.getters.fetchAllSortByUpdatedAt;
+          break;
       }
-      if (e.target.value === "sortUpdated") {
-        props.updateTodos(store.getters.fetchAllSortByUpdatedAt);
+
+      switch (filterValue) {
+        case "filterAll":
+          props.updateTodos(updated);
+          break;
+        case "filterDate":
+          props.updateTodos(updated.filter((todo) => todo.date));
+          break;
+        case "filterDone":
+          props.updateTodos(updated.filter((todo) => todo.done));
+          break;
+        case "filterNotDone":
+          props.updateTodos(updated.filter((todo) => !todo.done));
+          break;
       }
     };
 
-    return { sort };
+    return { sortAndFilter };
   },
 };
 </script>
