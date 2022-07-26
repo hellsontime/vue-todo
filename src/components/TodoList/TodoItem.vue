@@ -16,8 +16,8 @@
     >
       {{ todo.content }}
     </label>
-    <div v-if="formatDate" class="bg-light-grey px-3 py-2 radius-md ml-4">
-      {{ formatDate }}
+    <div v-if="todo.date" class="bg-light-grey px-3 py-2 radius-md ml-4">
+      {{ timeConverter(todo.date) }}
     </div>
   </div>
 </template>
@@ -34,18 +34,13 @@ export default {
     },
   },
   setup(props) {
-    let formatDate;
-    if (props.todo.date) {
-      formatDate = timeConverter(props.todo.date);
-    }
-
     const toggleTodo = () => {
       store.commit("updateStatus", {
         id: props.todo.id,
       });
     };
 
-    return { formatDate, toggleTodo };
+    return { timeConverter, toggleTodo };
   },
 };
 </script>

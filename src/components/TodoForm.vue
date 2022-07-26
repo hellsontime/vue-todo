@@ -108,6 +108,7 @@ export default {
       if (dateVisible.value) {
         newTodo.value.date = date.value.toISOString();
       }
+
       store.commit("add", {
         userId: newTodo.value.userId,
         content: newTodo.value.content,
