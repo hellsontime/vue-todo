@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="addTodo"
+    @submit.prevent="editMode ? saveTodo() : addTodo()"
     class="relative flex"
     :class="editMode ? '' : 'mb-6'"
   >
@@ -11,18 +11,57 @@
     >
       <fa icon="fa-solid fa-arrow-left-long" />
     </div>
+
     <input
+      v-if="editMode"
+      v-model="editTodo.content"
+      id="editTodo"
+      type="text"
+      class="w-full py-4 px-5 pr-24 focus:outline-none shadow-sm rounded-md relative"
+      placeholder="Edit todo ..."
+    />
+    <input
+      v-else
       v-model="newTodo.content"
       id="newTodo"
       type="text"
       class="w-full py-4 px-5 pr-24 focus:outline-none shadow-sm rounded-md relative"
-      :placeholder="editMode ? 'Edit todo ...' : 'Add new ...'"
+      placeholder="Add new ..."
     />
-    <div v-if="date" class="absolute top-0 right-[105px] top-[16px] z-10">
+
+    <div
+      v-if="editTodo.date"
+      class="absolute top-0 right-[105px] top-[16px] z-10"
+    >
+      {{ editFormatDate }}
+    </div>
+
+    <div v-else class="absolute top-0 right-[105px] top-[16px] z-10">
       {{ formatDate }}
     </div>
 
     <Datepicker
+      v-if="editMode"
+      v-model="editTodo.date"
+      position="right"
+      ref="editDatepicker"
+      type="date"
+      :enableTimePicker="false"
+      :minDate="new Date()"
+      class="mt-3 shadow-sm border-none w-50"
+    >
+      <template #trigger>
+        <fa
+          @click="toggleEditDatepicker"
+          icon="fa-solid fa-calendar-days"
+          class="absolute text-xl font-light top-4 right-[4.5rem] cursor-pointer"
+          :class="editDateVisible ? 'text-at-blue' : 'text-grey'"
+        />
+      </template>
+    </Datepicker>
+
+    <Datepicker
+      v-else
       v-model="date"
       position="right"
       ref="datepicker"
@@ -42,12 +81,23 @@
     </Datepicker>
 
     <button
+      v-if="editMode"
+      :disabled="!editInputEnabled"
+      type="submit"
+      class="text-white py-1.5 px-2 rounded absolute right-3 top-2.5"
+      :class="editInputEnabled ? 'bg-at-blue' : 'bg-grey'"
+    >
+      Save
+    </button>
+
+    <button
+      v-else
       :disabled="!inputEnabled"
       type="submit"
       class="text-white py-1.5 px-2 rounded absolute right-3 top-2.5"
       :class="inputEnabled ? 'bg-at-blue' : 'bg-grey'"
     >
-      {{ editMode ? "Save" : "Add" }}
+      Add
     </button>
   </form>
 </template>
@@ -62,12 +112,6 @@ import store from "@/store";
 
 export default {
   components: { Datepicker },
-  props: {
-    editMode: {
-      required: true,
-      type: Boolean,
-    },
-  },
   setup() {
     // init value for new Todo
     const newTodo = ref(emptyTodo);
@@ -82,7 +126,7 @@ export default {
       );
     });
 
-    // init values for datepicker
+    // init values for add datepicker
     const date = ref(null);
     const formatDate = ref(null);
     const dateVisible = ref(false);
@@ -110,10 +154,6 @@ export default {
         : (formatDate.value = null);
     });
 
-    watchEffect(() => {
-      date.value ? console.log(date.value.toISOString()) : null;
-    });
-
     // clear new todo values after add
     const clearNewTodo = () => {
       newTodo.value.content = "";
@@ -137,21 +177,76 @@ export default {
       dateVisible.value = false;
     };
 
+    const editTodo = computed(() => store.state.editTodo);
+    const editMode = computed(() => store.state.editMode);
+
+    const editFormatDate = ref(null);
+    const editDateVisible = ref(false);
+    const editDatepicker = ref(null);
+
+    const toggleEditDatepicker = () => {
+      if (editTodo.value.date) {
+        editTodo.value.date = null;
+        editDatepicker.value.openMenu();
+      }
+    };
+
+    watchEffect(() => {
+      if (editTodo.value.date) {
+        editDateVisible.value = true;
+        return;
+      }
+      editDateVisible.value = false;
+      return;
+    });
+
+    watchEffect(() => {
+      editTodo.value.date
+        ? (editFormatDate.value = timeConverter(editTodo.value.date))
+        : (editFormatDate.value = null);
+    });
+
+    // Save button enabled/disabled tracker
+    const editInputEnabled = ref(true);
+    watchEffect(() => {
+      computed(
+        editTodo.value.content === null || editTodo.value.content === ""
+          ? (editInputEnabled.value = false)
+          : (editInputEnabled.value = true)
+      );
+    });
+
     // toggle edit mode
     const toggleEditMode = () => {
       store.commit("toggleEditMode");
+      store.commit("unsetEditTodo");
+    };
+
+    // save deited todo
+    const saveTodo = () => {
+      store.commit("update", { editTodo: editTodo.value });
+      store.commit("toggleEditMode");
+      store.commit("unsetEditTodo");
     };
 
     return {
       newTodo,
       inputEnabled,
+      editInputEnabled,
       addTodo,
       date,
       formatDate,
       dateVisible,
       datepicker,
       toggleDatepicker,
+      editMode,
+      editTodo,
+      saveTodo,
       toggleEditMode,
+      toggleEditDatepicker,
+      editDateVisible,
+      editFormatDate,
+      editDatepicker,
     };
   },
 };
