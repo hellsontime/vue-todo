@@ -8,6 +8,9 @@ module.exports = {
         grey: "#b0b0b0",
         "at-blue": "#5601ff",
       },
+      transitionProperty: {
+        width: "width",
+      },
     },
     fontFamily: {
       Albert: ["Albert Sans, sans-serif"],
