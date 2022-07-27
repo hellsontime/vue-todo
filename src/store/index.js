@@ -34,6 +34,16 @@ const store = createStore({
         updated_at: new Date().toISOString(),
       });
     },
+    update(state, { editTodo }) {
+      state.todos.map((todo) =>
+        editTodo.id !== todo.id
+          ? todo
+          : (() => {
+              todo.content = editTodo.content;
+              todo.date = editTodo.date;
+            })()
+      );
+    },
     delete(state, { id }) {
       let index = state.todos.findIndex((todo) => todo.id == id);
       state.todos.splice(index, 1);
@@ -45,6 +55,12 @@ const store = createStore({
     },
     toggleEditMode(state) {
       state.editMode = !state.editMode;
+    },
+    setEditTodo(state, { todo }) {
+      state.editTodo = todo;
+    },
+    unsetEditTodo(state) {
+      state.editTodo = {};
     },
   },
 });
