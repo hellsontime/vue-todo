@@ -39,8 +39,12 @@ const store = createStore({
         updated_at: new Date().toISOString(),
       });
     },
+    delete(state, {id}) {
+      let index = state.todos.findIndex(todo => todo.id == id);
+      state.todos.splice(index, 1);
+    },
     updateStatus(state, { id }) {
-      state.todos.map((todo) =>
+      state.todos.map(todo =>
         todo.id !== id ? todo : (todo.done = !todo.done)
       );
     },
