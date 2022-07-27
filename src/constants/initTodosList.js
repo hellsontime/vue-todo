@@ -11,8 +11,7 @@ export default [
   {
     id: 1,
     userId: 1,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, tempore.",
+    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     date: null,
     done: false,
     created_at: "2022-02-01T00:00:00.000Z",
