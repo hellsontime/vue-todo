@@ -3,28 +3,22 @@
     class="flex items-center w-full bg-white p-6 rounded-md shadow-sm cursor-pointer relative group transition duration-500"
   >
     <div
-      class="transition-[width] duration-500 h-[10px] w-[0px] group-hover:w-[80px]"
+      class="transition-[width] duration-500 h-[10px] w-[0px] group-hover:w-[70px]"
     ></div>
     <div
       class="flex invisible opacity-0 gap-3 mr-4 text-[1.15rem] group-hover:visible group-hover:opacity-100 transition duration-500 absolute top-5.25 left-5"
     >
       <div
-        class="flex justify-center items-center bg-grey w-7 h-7 rounded-full hover:bg-at-blue transition"
+        @click="deleteTodo"
+        class="flex justify-center items-center bg-grey w-6 h-6 rounded hover:bg-at-blue transition"
       >
-        <fa
-          @click="deleteTodo"
-          icon="fa-solid fa-trash"
-          class="text-white h-3.5"
-        />
+        <fa icon="fa-solid fa-trash" class="text-white h-3.5" />
       </div>
       <div
-        class="flex justify-center items-center bg-grey w-7 h-7 rounded-full hover:bg-at-blue transition"
+        @click="editTodo"
+        class="flex justify-center items-center bg-grey w-6 h-6 rounded hover:bg-at-blue transition"
       >
-        <fa
-          @click="editTodo"
-          icon="fa-solid fa-pencil"
-          class="text-white h-3.5"
-        />
+        <fa icon="fa-solid fa-pencil" class="text-white h-3.5" />
       </div>
     </div>
     <input
@@ -72,7 +66,9 @@ export default {
     };
 
     const editTodo = () => {
+      const todoClone = { ...props.todo };
       store.commit("toggleEditMode");
+      store.commit("setEditTodo", { todo: todoClone });
     };
 
     return { timeConverter, toggleTodo, deleteTodo, editTodo };
