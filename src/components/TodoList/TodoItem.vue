@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex items-center w-full bg-white p-6 rounded-md shadow-sm cursor-pointer relative group transition duration-500"
+    class="flex items-center w-full bg-white p-6 rounded-md shadow-sm cursor-pointer relative group transition duration-500 overflow-hidden"
   >
     <div
-      class="transition-[width] duration-500 h-[10px] w-[0px] group-hover:w-[70px]"
+      class="transition-[width] duration-500 h-[10px] w-[0px] group-hover:w-[74px]"
     ></div>
     <div
-      class="flex invisible opacity-0 gap-3 mr-4 text-[1.15rem] group-hover:visible group-hover:opacity-100 transition duration-500 absolute top-5.25 left-5"
+      class="flex gap-3 mr-4 text-[1.15rem] group-hover:visible group-hover:opacity-100 duration-500 absolute top-5.25 -left-[60px] group-hover:left-[24px] transition-all"
     >
       <div
         @click="deleteTodo"
