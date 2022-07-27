@@ -9,13 +9,15 @@
       <p class="tracking-wider text-xl">vue todo app</p>
     </div>
 
-    <TodoForm />
+    <TodoForm :editMode="editMode" />
 
-    <TodoList />
+    <TodoList v-if="!editMode" />
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+import store from "@/store";
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
 
@@ -25,7 +27,8 @@ export default {
     TodoList,
   },
   setup() {
-    return {};
+    const editMode = computed(() => store.state.editMode);
+    return { editMode };
   },
 };
 </script>
