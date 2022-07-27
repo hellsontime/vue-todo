@@ -10,15 +10,15 @@
     >
       <div
         @click="deleteTodo"
-        class="flex justify-center items-center bg-grey w-6 h-6 rounded hover:bg-at-blue transition"
+        class="flex justify-center items-center bg-light-grey w-6 h-6 rounded hover:bg-at-blue transition text-grey hover:text-white"
       >
-        <fa icon="fa-solid fa-trash" class="text-white h-3.5" />
+        <fa icon="fa-solid fa-trash" class="h-3.5" />
       </div>
       <div
         @click="editTodo"
-        class="flex justify-center items-center bg-grey w-6 h-6 rounded hover:bg-at-blue transition"
+        class="flex justify-center items-center bg-light-grey w-6 h-6 rounded hover:bg-at-blue transition text-grey hover:text-white"
       >
-        <fa icon="fa-solid fa-pencil" class="text-white h-3.5" />
+        <fa icon="fa-solid fa-pencil" class="h-3.5" />
       </div>
     </div>
     <input
