@@ -1,11 +1,22 @@
 <template>
-  <form @submit.prevent="addTodo" class="mb-2 relative">
+  <form
+    @submit.prevent="addTodo"
+    class="relative flex"
+    :class="editMode ? '' : 'mb-6'"
+  >
+    <div
+      v-if="editMode"
+      @click="toggleEditMode"
+      class="bg-white mr-3 flex justify-center items-center w-full max-w-[56px] shadow-sm rounded-md text-xl text-grey hover:text-at-blue cursor-pointer"
+    >
+      <fa icon="fa-solid fa-arrow-left-long" />
+    </div>
     <input
       v-model="newTodo.content"
       id="newTodo"
       type="text"
       class="w-full py-4 px-5 pr-24 focus:outline-none shadow-sm rounded-md relative"
-      placeholder="Add new ..."
+      :placeholder="editMode ? 'Edit todo ...' : 'Add new ...'"
     />
     <div v-if="date" class="absolute top-0 right-[105px] top-[16px] z-10">
       {{ formatDate }}
@@ -36,7 +47,7 @@
       class="text-white py-1.5 px-2 rounded absolute right-3 top-2.5"
       :class="inputEnabled ? 'bg-at-blue' : 'bg-grey'"
     >
-      Add
+      {{ editMode ? "Save" : "Add" }}
     </button>
   </form>
 </template>
@@ -51,6 +62,12 @@ import store from "@/store";
 
 export default {
   components: { Datepicker },
+  props: {
+    editMode: {
+      required: true,
+      type: Boolean,
+    },
+  },
   setup() {
     // init value for new Todo
     const newTodo = ref(emptyTodo);
@@ -120,6 +137,11 @@ export default {
       dateVisible.value = false;
     };
 
+    // toggle edit mode
+    const toggleEditMode = () => {
+      store.commit("toggleEditMode");
+    };
+
     return {
       newTodo,
       inputEnabled,
@@ -129,6 +151,7 @@ export default {
       dateVisible,
       datepicker,
       toggleDatepicker,
+      toggleEditMode,
     };
   },
 };
