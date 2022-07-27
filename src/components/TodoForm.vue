@@ -30,13 +30,16 @@
     />
 
     <div
-      v-if="editTodo.date"
+      v-if="editTodo.date && editMode"
       class="absolute top-0 right-[105px] top-[16px] z-10"
     >
       {{ editFormatDate }}
     </div>
 
-    <div v-else class="absolute top-0 right-[105px] top-[16px] z-10">
+    <div
+      v-if="date && !editMode"
+      class="absolute top-0 right-[105px] top-[16px] z-10"
+    >
       {{ formatDate }}
     </div>
 
