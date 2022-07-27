@@ -20,7 +20,11 @@
       <div
         class="flex justify-center items-center bg-grey w-7 h-7 rounded-full hover:bg-at-blue transition"
       >
-        <fa icon="fa-solid fa-pencil" class="text-white h-3.5" />
+        <fa
+          @click="editTodo"
+          icon="fa-solid fa-pencil"
+          class="text-white h-3.5"
+        />
       </div>
     </div>
     <input
@@ -67,7 +71,11 @@ export default {
       });
     };
 
-    return { timeConverter, toggleTodo, deleteTodo };
+    const editTodo = () => {
+      store.commit("toggleEditMode");
+    };
+
+    return { timeConverter, toggleTodo, deleteTodo, editTodo };
   },
 };
 </script>
