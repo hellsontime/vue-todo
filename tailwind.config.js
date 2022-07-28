@@ -5,9 +5,11 @@ module.exports = {
     extend: {
       colors: {
         "light-black": "#565656",
+        "light-white": "#f7f7f7",
         "light-grey": "#f1f1f1",
         grey: "#b0b0b0",
         "at-blue": "#5601ff",
+        "at-light-blue": "#e7e5ff",
       },
       transitionProperty: {
         width: "width",
