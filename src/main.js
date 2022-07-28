@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
+import router from "./router";
+
 import store from "./store";
 
 import "@/assets/tailwind.css";
@@ -15,6 +17,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 library.add(fas);
 
 createApp(App)
+  .use(router)
   .use(store)
   .component("fa", FontAwesomeIcon)
   .component("Datepicker", Datepicker)
