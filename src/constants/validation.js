@@ -1,6 +1,6 @@
 const validation = {
   name: {
-    rule: /^[a-zA-Z]{2,255}$/,
+    rule: /^[a-zA-Z]{2,32}$/,
     message: "Name must contain only letters",
   },
   email: {
