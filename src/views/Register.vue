@@ -59,6 +59,13 @@
         </div>
       </div>
 
+      <div
+        v-if="successMsg"
+        class="bg-green-100 py-2 px-4 rounded-md text-green-400 shadow-sm"
+      >
+        {{ successMsg }}
+      </div>
+
       <button
         type="submit"
         class="bg-at-blue rounded-md py-2 px-6 text-white font-bold mt-4"
@@ -76,10 +83,16 @@
 <script>
 import { ref } from "vue";
 import validation from "@/constants/validation";
+import { useRouter } from "vue-router";
+import authHelper from "@/helpers/auth/authHelper";
+import { REGISTER_API_ROUTE } from "@/constants/App";
 
 export default {
   name: "register",
   setup() {
+    const router = useRouter();
+    if (localStorage.getItem("user")) router.push({ name: "Home" });
+
     // password visible/invisible
     const showPassword = ref(false);
     const toggelPassword = () => {
@@ -91,6 +104,7 @@ export default {
     const email = ref(null);
     const password = ref(null);
     const errorMsg = ref([]);
+    const successMsg = ref(null);
 
     const validate = () => {
       errorMsg.value = [];
@@ -106,10 +120,34 @@ export default {
       if (!validation.password.rule.test(password.value)) {
         errorMsg.value.push(validation.password.message);
       }
+
+      if (errorMsg.value.length) throw Error;
     };
 
-    const register = () => {
-      validate();
+    const redirectToTodo = () => {
+      successMsg.value = "You have registered successfully!";
+      setTimeout(() => {
+        router.push({ name: "Home" });
+      }, 2000);
+    };
+
+    const register = async () => {
+      try {
+        validate();
+        await authHelper(
+          {
+            name: name.value,
+            email: email.value,
+            password: password.value,
+            password_confirmation: password.value,
+          },
+          errorMsg,
+          redirectToTodo,
+          REGISTER_API_ROUTE
+        );
+      } catch (err) {
+        return;
+      }
     };
 
     return {
@@ -120,6 +158,7 @@ export default {
       password,
       register,
       errorMsg,
+      successMsg,
     };
   },
 };
