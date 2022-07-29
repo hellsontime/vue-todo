@@ -5,6 +5,7 @@ import { uid } from "uid";
 const store = createStore({
   state() {
     return {
+      user: JSON.parse(localStorage.getItem("user")),
       todos: todos,
       editMode: false,
       editTodo: {},
@@ -23,6 +24,9 @@ const store = createStore({
     },
   },
   mutations: {
+    setUser(state, user) {
+      state.user = user;
+    },
     add(state, { userId, content, date }) {
       state.todos.unshift({
         id: uid(),
