@@ -6,6 +6,8 @@
 
 <script>
 export default {
-  setup() {},
+  setup() {
+    return {};
+  },
 };
 </script>
