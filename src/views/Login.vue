@@ -64,11 +64,18 @@
 
 <script>
 import { ref } from "vue";
+// import { useRouter } from "vue-router";
 import validation from "@/constants/validation";
+import authHelper from "@/helpers/auth/authHelper";
+import { LOGIN_API_ROUTE } from "@/constants/App";
+import { useRouter } from "vue-router";
 
 export default {
   name: "login",
   setup() {
+    const router = useRouter();
+    if (localStorage.getItem("user")) router.push({ name: "Home" });
+
     const showPassword = ref(false);
 
     const toggelPassword = () => {
@@ -86,14 +93,29 @@ export default {
       if (!validation.email.rule.test(email.value)) {
         errorMsg.value.push(validation.email.message);
       }
-      // validate password
-      if (!validation.password.rule.test(password.value)) {
-        errorMsg.value.push(validation.password.message);
-      }
+
+      if (errorMsg.value.length) throw Error;
     };
 
-    const login = () => {
-      validate();
+    const redirectToTodo = () => {
+      router.push({ name: "Home" });
+    };
+
+    const login = async () => {
+      try {
+        validate();
+        await authHelper(
+          {
+            email: email.value,
+            password: password.value,
+          },
+          errorMsg,
+          redirectToTodo,
+          LOGIN_API_ROUTE
+        );
+      } catch (err) {
+        return;
+      }
     };
 
     return { showPassword, toggelPassword, email, password, login, errorMsg };
