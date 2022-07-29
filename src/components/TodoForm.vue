@@ -14,7 +14,7 @@
 
     <input
       v-if="editMode"
-      v-model="editTodo.content"
+      v-model="editTodo.title"
       id="editTodo"
       type="text"
       class="w-full py-4 px-5 pr-24 focus:outline-none shadow-sm rounded-md relative"
@@ -22,7 +22,7 @@
     />
     <input
       v-else
-      v-model="newTodo.content"
+      v-model="newTodo.title"
       id="newTodo"
       type="text"
       class="w-full py-4 px-5 pr-24 focus:outline-none shadow-sm rounded-md relative"
@@ -123,7 +123,7 @@ export default {
     const inputEnabled = ref(false);
     watchEffect(() => {
       computed(
-        newTodo.value.content === null || newTodo.value.content === ""
+        newTodo.value.title === null || newTodo.value.title === ""
           ? (inputEnabled.value = false)
           : (inputEnabled.value = true)
       );
@@ -159,7 +159,7 @@ export default {
 
     // clear new todo values after add
     const clearNewTodo = () => {
-      newTodo.value.content = "";
+      newTodo.value.title = "";
       newTodo.value.date = null;
     };
 
@@ -171,7 +171,7 @@ export default {
 
       store.commit("add", {
         userId: newTodo.value.userId,
-        content: newTodo.value.content,
+        title: newTodo.value.title,
         date: newTodo.value.date,
       });
 
@@ -213,7 +213,7 @@ export default {
     const editInputEnabled = ref(true);
     watchEffect(() => {
       computed(
-        editTodo.value.content === null || editTodo.value.content === ""
+        editTodo.value.title === null || editTodo.value.title === ""
           ? (editInputEnabled.value = false)
           : (editInputEnabled.value = true)
       );

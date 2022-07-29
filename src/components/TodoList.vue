@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import TodoItem from "@/components/TodoList/TodoItem";
 import TodoFilter from "@/components/TodoList/TodoFilter";
 import store from "@/store";
@@ -24,7 +24,7 @@ export default {
     TodoFilter,
   },
   setup() {
-    const todos = ref(store.getters.fetchAllSortByCreatedAt);
+    const todos = ref(computed(() => store.getters.fetchAllSortByCreatedAt));
     const updateTodos = (newTodos) => {
       todos.value = newTodos;
     };

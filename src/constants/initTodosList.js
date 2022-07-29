@@ -2,7 +2,7 @@ export default [
   {
     id: 2,
     userId: 2,
-    content: "Odio, tempore.",
+    title: "Odio, tempore.",
     date: "2022-07-08T00:00:00.000Z",
     done: false,
     created_at: "2022-05-03T00:00:00.000Z",
@@ -11,7 +11,7 @@ export default [
   {
     id: 1,
     userId: 1,
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     date: null,
     done: false,
     created_at: "2022-02-01T00:00:00.000Z",
@@ -20,7 +20,7 @@ export default [
   {
     id: 5,
     userId: 5,
-    content: "Ipsum dolor sit, tempore.",
+    title: "Ipsum dolor sit, tempore.",
     date: "2022-03-17T00:00:00.000Z",
     done: true,
     created_at: "2021-11-09T00:00:00.000Z",
@@ -29,7 +29,7 @@ export default [
   {
     id: 4,
     userId: 4,
-    content: "Adipisicing elit. Odio, tempore.",
+    title: "Adipisicing elit. Odio, tempore.",
     date: null,
     done: false,
     created_at: "2022-05-07T00:00:00.000Z",
@@ -38,7 +38,7 @@ export default [
   {
     id: 3,
     userId: 3,
-    content: "Amet consectetur adipisicing elit",
+    title: "Amet consectetur adipisicing elit",
     date: null,
     done: true,
     created_at: "2021-09-07T00:00:00.000Z",

@@ -1,7 +1,7 @@
 export default {
   id: null,
   userId: null,
-  content: null,
+  title: null,
   date: null,
   done: false,
   created_at: null,

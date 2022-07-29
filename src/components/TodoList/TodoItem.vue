@@ -33,7 +33,7 @@
       :for="'todo' + todo.id"
       :class="todo.done ? 'line-through' : null"
     >
-      {{ todo.content }}
+      {{ todo.title }}
     </label>
     <div v-if="todo.date" class="bg-light-grey px-3 py-2 radius-md ml-4">
       {{ timeConverter(todo.date) }}

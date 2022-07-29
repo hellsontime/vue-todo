@@ -29,11 +29,11 @@ const store = createStore({
     setTodos(state, todos) {
       state.todos = todos;
     },
-    add(state, { userId, content, date }) {
+    add(state, { userId, title, date }) {
       state.todos.unshift({
         id: uid(),
         userId,
-        content,
+        title,
         done: false,
         date,
         created_at: new Date().toISOString(),
@@ -45,7 +45,7 @@ const store = createStore({
         editTodo.id !== todo.id
           ? todo
           : (() => {
-              todo.content = editTodo.content;
+              todo.title = editTodo.title;
               todo.date = editTodo.date;
             })()
       );
