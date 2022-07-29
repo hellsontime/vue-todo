@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+// import store from "@/store";
 import Home from "@/views/Todo.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
@@ -52,6 +53,19 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} | Vue Todo`;
   next();
+});
+
+// Route guard for auth routes
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth === true) {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      next({ name: "Login" });
+      return;
+    }
+  }
+  next();
+  return;
 });
 
 export default router;
