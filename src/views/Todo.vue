@@ -8,9 +8,12 @@
         <p class="tracking-wider text-xl">vue todo app</p>
       </div>
 
-      <div class="flex items-center gap-2 text-grey cursor-pointer">
-        <span class="">Logout</span>
+      <div
+        @click="logout"
+        class="flex items-center gap-2 text-grey cursor-pointer"
+      >
         <fa icon="fa-solid fa-arrow-right-from-bracket" />
+        <span>Logout</span>
       </div>
     </div>
 
@@ -22,6 +25,7 @@
 
 <script>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 import store from "@/store";
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
@@ -34,7 +38,13 @@ export default {
   setup() {
     const editMode = computed(() => store.state.editMode);
 
-    const logout = () => {};
+    const router = useRouter();
+
+    const logout = async () => {
+      store.commit("setUser", {});
+      localStorage.clear();
+      router.push({ name: "Login" });
+    };
 
     return { editMode, logout };
   },
