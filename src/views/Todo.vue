@@ -8,12 +8,26 @@
         <p class="tracking-wider text-xl">vue todo app</p>
       </div>
 
-      <div
-        @click="logout"
-        class="flex items-center gap-2 text-grey cursor-pointer"
-      >
-        <fa icon="fa-solid fa-arrow-right-from-bracket" />
-        <span>Logout</span>
+      <div class="flex items-center gap-2">
+        <div>Hi, {{ user.name }}</div>
+        <div
+          class="flex items-center justify-center bg-at-light-blue h-[40px] w-[40px] rounded-full cursor-pointer relative group transition-all"
+        >
+          <div class="font-bold text-at-blue uppercase">
+            {{ user.name.slice(0, 1) }}
+          </div>
+          <div
+            class="absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 duration-200 delay-100 rounded-md top-[45px] -right-[10px] bg-white shadow-md p-4 z-10"
+          >
+            <div
+              @click="logout"
+              class="flex items-center gap-2 text-grey cursor-pointer"
+            >
+              <fa icon="fa-solid fa-arrow-right-from-bracket" />
+              <span>Logout</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -36,6 +50,8 @@ export default {
     TodoList,
   },
   setup() {
+    const user = store.state.user;
+
     const editMode = computed(() => store.state.editMode);
 
     const router = useRouter();
@@ -46,7 +62,7 @@ export default {
       router.push({ name: "Login" });
     };
 
-    return { editMode, logout };
+    return { user, editMode, logout };
   },
 };
 </script>
