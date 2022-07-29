@@ -34,7 +34,7 @@ const store = createStore({
         id: uid(),
         userId,
         title,
-        done: false,
+        status: false,
         date,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
@@ -56,7 +56,7 @@ const store = createStore({
     },
     updateStatus(state, { id }) {
       state.todos.map((todo) =>
-        todo.id !== id ? todo : (todo.done = !todo.done)
+        todo.id !== id ? todo : (todo.status = !todo.status)
       );
     },
     toggleEditMode(state) {

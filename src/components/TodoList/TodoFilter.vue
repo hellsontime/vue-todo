@@ -67,10 +67,10 @@ export default {
           props.updateTodos(updated.filter((todo) => todo.date));
           break;
         case "filterDone":
-          props.updateTodos(updated.filter((todo) => todo.done));
+          props.updateTodos(updated.filter((todo) => todo.status));
           break;
         case "filterNotDone":
-          props.updateTodos(updated.filter((todo) => !todo.done));
+          props.updateTodos(updated.filter((todo) => !todo.status));
           break;
       }
     };

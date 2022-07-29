@@ -3,7 +3,7 @@ export default {
   userId: null,
   title: null,
   date: null,
-  done: false,
+  status: false,
   created_at: null,
   updated_at: null,
 };

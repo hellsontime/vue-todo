@@ -25,13 +25,13 @@
       type="checkbox"
       class="h-5 w-5 mr-4 focus:outline-none rounded-sm cursor-pointer"
       :id="'todo' + todo.id"
-      :checked="todo.done ? true : false"
+      :checked="todo.status ? true : false"
       @change="toggleTodo"
     />
     <label
       class="text-lg flex-2 cursor-pointer"
       :for="'todo' + todo.id"
-      :class="todo.done ? 'line-through' : null"
+      :class="todo.status ? 'line-through' : null"
     >
       {{ todo.title }}
     </label>
