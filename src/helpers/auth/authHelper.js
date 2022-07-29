@@ -10,7 +10,6 @@ const authHelper = (user, errorMsg, redirectToTodo, route) => {
     .then((_res) => {
       localStorage.setItem("user-token", _res.data.token);
       localStorage.setItem("user", JSON.stringify(_res.data.user));
-      console.log(_res.data.user);
       store.commit("setUser", _res.data.user);
       redirectToTodo();
     })
