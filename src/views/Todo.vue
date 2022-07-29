@@ -38,11 +38,13 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import store from "@/store";
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
+import { customAxios } from "@/helpers/axiosHelper";
+import { TODOS_API_ROUTE } from "@/constants/App";
 
 export default {
   components: {
@@ -51,6 +53,20 @@ export default {
   },
   setup() {
     const user = store.state.user;
+
+    watchEffect(() => {
+      async function fetchTodos() {
+        try {
+          let res = await customAxios.get(TODOS_API_ROUTE);
+          console.log(res.data);
+          store.commit("setTodos", res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      fetchTodos();
+    });
 
     const editMode = computed(() => store.state.editMode);
 
