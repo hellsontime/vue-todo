@@ -1,6 +1,7 @@
 <template>
-  <div class="flex justify-end w-full items-center mt-5">
+  <div class="flex justify-end w-full items-center gap-3 mt-5">
     <div class="flex items-center relative">
+      <fa icon="fa-solid fa-filter" class="ml-2 text-lg text-at-blue" />
       <p class="mx-2">Filter</p>
       <select
         class="bg-white py-2 px-3 rounded-md appearance-none focus:outline-none pr-6"
@@ -16,7 +17,12 @@
         <fa icon="fa-solid fa-sort" />
       </div>
     </div>
+
     <div class="flex items-center relative">
+      <fa
+        icon="fa-solid fa-arrow-down-wide-short"
+        class="ml-2 text-xl text-at-blue"
+      />
       <p class="mx-2">Sort</p>
       <select
         class="bg-white py-2 px-3 rounded-md appearance-none focus:outline-none pr-6"
@@ -30,10 +36,6 @@
         <fa icon="fa-solid fa-sort" />
       </div>
     </div>
-    <fa
-      icon="fa-solid fa-arrow-down-short-wide"
-      class="ml-2 text-xl text-at-blue"
-    />
   </div>
 </template>
 
