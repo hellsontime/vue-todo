@@ -169,8 +169,8 @@ export default {
         newTodo.value.date = date.value.toISOString();
       }
 
-      store.commit("add", {
-        userId: newTodo.value.userId,
+      store.dispatch("addTodo", {
+        userId: store.state.user.id,
         title: newTodo.value.title,
         date: newTodo.value.date,
       });
