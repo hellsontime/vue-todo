@@ -10,6 +10,7 @@ const store = createStore({
       todos: [],
       editMode: false,
       editTodo: {},
+      globalError: null,
     };
   },
   getters: {
@@ -75,6 +76,32 @@ const store = createStore({
     async fetchTodos({ commit }) {
       let res = await customAxios.get(TODOS_API_ROUTE);
       commit("setTodos", res.data);
+    },
+    async addTodo({ commit }, { userId, title, date }) {
+      await customAxios
+        .post(TODOS_API_ROUTE, { title, date })
+        .then(() => {
+          commit("add", { userId, title, date });
+        })
+        .catch((_rej) => {
+          store.state.globalError = _rej;
+          setTimeout(() => {
+            store.state.globalError = null;
+          }, 5000);
+        });
+    },
+    async deleteTodo({ commit }, { id }) {
+      await customAxios
+        .delete(TODOS_API_ROUTE + "/" + id)
+        .then(() => {
+          commit("delete", { id });
+        })
+        .catch((_rej) => {
+          store.state.globalError = _rej;
+          setTimeout(() => {
+            store.state.globalError = null;
+          }, 5000);
+        });
     },
   },
 });
