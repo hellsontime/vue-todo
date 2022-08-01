@@ -44,6 +44,13 @@
         :updateTodos="updateTodos"
       />
     </div>
+
+    <div
+      v-if="globalError"
+      class="absolute bottom-8 right-8 bg-red-100 py-2 px-4 rounded-md text-red-400 shadow-sm"
+    >
+      {{ globalError }}
+    </div>
   </div>
 </template>
 
@@ -69,6 +76,7 @@ export default {
     };
 
     const fetchError = ref(false);
+    const globalError = computed(() => store.state.globalError);
     const loading = ref(true);
 
     store
@@ -92,7 +100,16 @@ export default {
       router.push({ name: "Login" });
     };
 
-    return { user, editMode, logout, fetchError, loading, todos, updateTodos };
+    return {
+      user,
+      editMode,
+      logout,
+      fetchError,
+      loading,
+      todos,
+      updateTodos,
+      globalError,
+    };
   },
 };
 </script>
