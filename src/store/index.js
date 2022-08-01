@@ -1,5 +1,7 @@
 import { createStore } from "vuex";
 import { uid } from "uid";
+import { customAxios } from "@/helpers/axiosHelper";
+import { TODOS_API_ROUTE } from "@/constants/App";
 
 const store = createStore({
   state() {
@@ -67,6 +69,12 @@ const store = createStore({
     },
     unsetEditTodo(state) {
       state.editTodo = {};
+    },
+  },
+  actions: {
+    async fetchTodos({ commit }) {
+      let res = await customAxios.get(TODOS_API_ROUTE);
+      commit("setTodos", res.data);
     },
   },
 });
