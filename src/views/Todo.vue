@@ -31,18 +31,22 @@
       </div>
     </div>
 
-    <TodoForm :editMode="editMode" />
+    <TodoError v-if="fetchError" />
 
-    <TodoList v-if="!editMode" />
+    <div v-else>
+      <TodoForm :editMode="editMode" />
+      <TodoList v-if="!editMode" :loading="loading" />
+    </div>
   </div>
 </template>
 
 <script>
-import { computed, watchEffect } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import store from "@/store";
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
+import TodoError from "@/components/TodoError.vue";
 import { customAxios } from "@/helpers/axiosHelper";
 import { TODOS_API_ROUTE } from "@/constants/App";
 
@@ -50,18 +54,22 @@ export default {
   components: {
     TodoForm,
     TodoList,
+    TodoError,
   },
   setup() {
     const user = store.state.user;
+
+    const fetchError = ref(false);
+    const loading = ref(true);
 
     watchEffect(() => {
       async function fetchTodos() {
         try {
           let res = await customAxios.get(TODOS_API_ROUTE);
-          console.log(res.data);
           store.commit("setTodos", res.data);
+          loading.value = false;
         } catch (err) {
-          console.log(err);
+          fetchError.value = true;
         }
       }
 
@@ -78,7 +86,7 @@ export default {
       router.push({ name: "Login" });
     };
 
-    return { user, editMode, logout };
+    return { user, editMode, logout, fetchError, loading };
   },
 };
 </script>
