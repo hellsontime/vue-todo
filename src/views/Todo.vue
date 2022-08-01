@@ -31,50 +31,56 @@
       </div>
     </div>
 
-    <TodoError v-if="fetchError" />
+    <CardInfo v-if="fetchError" :icon="'fa-solid fa-circle-exclamation'">
+      <template #heading>service is unavailable now</template>
+      <template #info>try again later</template>
+    </CardInfo>
 
     <div v-else>
-      <TodoForm :editMode="editMode" />
-      <TodoList v-if="!editMode" :loading="loading" />
+      <TodoForm v-if="!loading" :editMode="editMode" />
+      <TodoList
+        v-if="!editMode && !loading"
+        :todos="todos"
+        :updateTodos="updateTodos"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import store from "@/store";
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
-import TodoError from "@/components/TodoError.vue";
-import { customAxios } from "@/helpers/axiosHelper";
-import { TODOS_API_ROUTE } from "@/constants/App";
+import CardInfo from "@/components/CardInfo";
 
 export default {
   components: {
     TodoForm,
     TodoList,
-    TodoError,
+    CardInfo,
   },
   setup() {
     const user = store.state.user;
+    const todos = ref(null);
+    const updateTodos = (newTodos) => {
+      todos.value = newTodos;
+    };
 
     const fetchError = ref(false);
     const loading = ref(true);
 
-    watchEffect(() => {
-      async function fetchTodos() {
-        try {
-          let res = await customAxios.get(TODOS_API_ROUTE);
-          store.commit("setTodos", res.data);
-          loading.value = false;
-        } catch (err) {
-          fetchError.value = true;
-        }
-      }
-
-      fetchTodos();
-    });
+    store
+      .dispatch("fetchTodos")
+      .then(() => {
+        loading.value = false;
+        todos.value = store.getters.fetchAllSortByCreatedAt;
+        console.log(todos.value);
+      })
+      .catch(() => {
+        fetchError.value = true;
+      });
 
     const editMode = computed(() => store.state.editMode);
 
@@ -86,7 +92,7 @@ export default {
       router.push({ name: "Login" });
     };
 
-    return { user, editMode, logout, fetchError, loading };
+    return { user, editMode, logout, fetchError, loading, todos, updateTodos };
   },
 };
 </script>
