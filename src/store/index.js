@@ -103,6 +103,26 @@ const store = createStore({
           }, 5000);
         });
     },
+    async updateTodo({ commit }, { editTodo }) {
+      console.log(editTodo);
+      await customAxios
+        .put(TODOS_API_ROUTE + "/" + editTodo.id, {
+          title: editTodo.title,
+          date: editTodo.date,
+        })
+        .then(() => {
+          commit("update", { editTodo });
+          commit("toggleEditMode");
+          commit("unsetEditTodo");
+        })
+        .catch((_rej) => {
+          console.log(_rej);
+          store.state.globalError = _rej;
+          setTimeout(() => {
+            store.state.globalError = null;
+          }, 5000);
+        });
+    },
   },
 });
 
