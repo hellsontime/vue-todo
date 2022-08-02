@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import { uid } from "uid";
 import { customAxios } from "@/helpers/axiosHelper";
-import { TODOS_API_ROUTE } from "@/constants/App";
+import { TODOS_API_ROUTE, STATUS_API_ROUTE } from "@/constants/App";
 
 const store = createStore({
   state() {
@@ -114,6 +114,25 @@ const store = createStore({
           commit("update", { editTodo });
           commit("toggleEditMode");
           commit("unsetEditTodo");
+        })
+        .catch((_rej) => {
+          store.state.globalError = _rej;
+          setTimeout(() => {
+            store.state.globalError = null;
+          }, 5000);
+        });
+    },
+    async updateTodoStatus({ commit }, { id, status }) {
+      console.log(id);
+      console.log(status);
+      await customAxios
+        .put(TODOS_API_ROUTE + "/" + id + STATUS_API_ROUTE, {
+          status: status ? 1 : 0,
+        })
+        .then(() => {
+          commit("updateStatus", {
+            id,
+          });
         })
         .catch((_rej) => {
           console.log(_rej);
