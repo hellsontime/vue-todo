@@ -54,8 +54,9 @@ export default {
   },
   setup(props) {
     const toggleTodo = () => {
-      store.commit("updateStatus", {
+      store.dispatch("updateTodoStatus", {
         id: props.todo.id,
+        status: !props.todo.status,
       });
     };
 
