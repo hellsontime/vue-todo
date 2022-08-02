@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-full font-Albert box-border">
+  <div
+    class="min-h-full h-[100vh] font-Albert box-border bg-light-grey md:bg-white"
+  >
     <router-view />
   </div>
 </template>

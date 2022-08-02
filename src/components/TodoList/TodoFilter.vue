@@ -1,6 +1,8 @@
 <template>
-  <div class="flex justify-end w-full items-center gap-3 mt-5">
-    <div class="flex items-center relative">
+  <div
+    class="flex flex-col justify-center items-end xs:flex-row xs:justify-end w-full gap-3 mt-5"
+  >
+    <div class="flex items-center justify-start relative">
       <fa icon="fa-solid fa-filter" class="ml-2 text-lg text-at-blue" />
       <p class="mx-2">Filter</p>
       <select

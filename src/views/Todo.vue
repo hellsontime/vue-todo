@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-screen-md mx-auto w-full flex flex-col justify-center p-8 my-20 bg-light-grey rounded-xl shadow-md"
+    class="max-w-screen-md mx-auto w-full flex flex-col justify-center p-8 md:my-20 bg-light-grey md:rounded-xl md:shadow-md"
   >
     <div class="flex justify-start items-center justify-between mb-6">
       <div class="flex items-center uppercase text-2xl text-at-blue font-bold">
@@ -9,7 +9,7 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <div>Hi, {{ user.name }}</div>
+        <div class="hidden xs:block">Hi, {{ user.name }}</div>
         <div
           class="flex items-center justify-center bg-at-light-blue h-[40px] w-[40px] rounded-full cursor-pointer relative group transition-all"
         >
