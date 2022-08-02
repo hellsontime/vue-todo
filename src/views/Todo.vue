@@ -84,7 +84,6 @@ export default {
       .then(() => {
         loading.value = false;
         todos.value = store.getters.fetchAllSortByCreatedAt;
-        console.log(todos.value);
       })
       .catch(() => {
         fetchError.value = true;

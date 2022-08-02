@@ -50,6 +50,7 @@ const store = createStore({
           : (() => {
               todo.title = editTodo.title;
               todo.date = editTodo.date;
+              todo.updated_at = new Date().toISOString();
             })()
       );
     },
@@ -104,7 +105,6 @@ const store = createStore({
         });
     },
     async updateTodo({ commit }, { editTodo }) {
-      console.log(editTodo);
       await customAxios
         .put(TODOS_API_ROUTE + "/" + editTodo.id, {
           title: editTodo.title,
@@ -123,8 +123,6 @@ const store = createStore({
         });
     },
     async updateTodoStatus({ commit }, { id, status }) {
-      console.log(id);
-      console.log(status);
       await customAxios
         .put(TODOS_API_ROUTE + "/" + id + STATUS_API_ROUTE, {
           status: status ? 1 : 0,
