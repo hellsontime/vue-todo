@@ -18,7 +18,7 @@
       :icon="'fa-solid fa-filter-circle-xmark'"
       class="my-[80px]"
     >
-      <template #heading>no todos fot this filter</template>
+      <template #heading>no todos for this filter</template>
     </CardInfo>
 
     <div
