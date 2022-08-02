@@ -1,5 +1,4 @@
 import { createStore } from "vuex";
-import { uid } from "uid";
 import { customAxios } from "@/helpers/axiosHelper";
 import { TODOS_API_ROUTE, STATUS_API_ROUTE } from "@/constants/App";
 
@@ -32,16 +31,8 @@ const store = createStore({
     setTodos(state, todos) {
       state.todos = todos;
     },
-    add(state, { userId, title, date }) {
-      state.todos.unshift({
-        id: uid(),
-        userId,
-        title,
-        status: false,
-        date,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
+    add(state, _res) {
+      state.todos.unshift(_res);
     },
     update(state, { editTodo }) {
       state.todos.map((todo) =>
@@ -75,14 +66,15 @@ const store = createStore({
   },
   actions: {
     async fetchTodos({ commit }) {
-      let res = await customAxios.get(TODOS_API_ROUTE);
-      commit("setTodos", res.data);
+      let _res = await customAxios.get(TODOS_API_ROUTE);
+      commit("setTodos", _res.data);
     },
-    async addTodo({ commit }, { userId, title, date }) {
+    async addTodo({ commit }, { title, date }) {
       await customAxios
         .post(TODOS_API_ROUTE, { title, date })
-        .then(() => {
-          commit("add", { userId, title, date });
+        .then((_res) => {
+          console.log(_res.data);
+          commit("add", _res.data);
         })
         .catch((_rej) => {
           store.state.globalError = _rej;

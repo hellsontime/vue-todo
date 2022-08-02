@@ -170,7 +170,6 @@ export default {
       }
 
       store.dispatch("addTodo", {
-        userId: store.state.user.id,
         title: newTodo.value.title,
         date: newTodo.value.date,
       });
