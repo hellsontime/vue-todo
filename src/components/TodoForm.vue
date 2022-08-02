@@ -227,9 +227,7 @@ export default {
 
     // save deited todo
     const saveTodo = () => {
-      store.commit("update", { editTodo: editTodo.value });
-      store.commit("toggleEditMode");
-      store.commit("unsetEditTodo");
+      store.dispatch("updateTodo", { editTodo: editTodo.value });
     };
 
     return {
