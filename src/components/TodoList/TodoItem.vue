@@ -21,20 +21,23 @@
         <fa icon="fa-solid fa-pencil" class="h-3.5" />
       </div>
     </div>
-    <input
-      type="checkbox"
-      class="h-5 w-5 mr-4 focus:outline-none rounded-sm cursor-pointer"
-      :id="'todo' + todo.id"
-      :checked="todo.status ? true : false"
-      @change="toggleTodo"
-    />
-    <label
-      class="text-lg flex-2 cursor-pointer"
-      :for="'todo' + todo.id"
-      :class="todo.status ? 'line-through' : null"
-    >
-      {{ todo.title }}
-    </label>
+    <div @click="toggleTodo" class="flex gap-3 items-center">
+      <div
+        class="flex justify-center items-center w-6 h-6 rounded transition text-white border-[1px] border-grey box-border"
+        :class="
+          todo.status ? 'bg-at-blue text-white border-none' : 'bg-light-grey'
+        "
+      >
+        <fa v-if="todo.status" icon="fa-solid fa-check" class="h-4" />
+      </div>
+      <label
+        class="text-lg flex-2 cursor-pointer"
+        :for="'todo' + todo.id"
+        :class="todo.status ? 'line-through' : null"
+      >
+        {{ todo.title }}
+      </label>
+    </div>
     <div v-if="todo.date" class="bg-light-grey px-3 py-2 radius-md ml-4">
       {{ timeConverter(todo.date) }}
     </div>
