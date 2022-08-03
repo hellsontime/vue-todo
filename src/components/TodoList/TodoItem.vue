@@ -1,12 +1,9 @@
 <template>
   <div
-    class="flex items-center w-full bg-white p-6 rounded-md shadow-sm cursor-pointer relative group transition duration-500 overflow-hidden"
+    class="flex items-center justify-between w-full bg-white p-6 rounded-md shadow-sm cursor-pointer group transition duration-500 relative z-[1000] item-parent"
   >
     <div
-      class="transition-[width] duration-500 delay-200 h-[10px] w-[0px] group-hover:w-[74px]"
-    ></div>
-    <div
-      class="flex gap-3 mr-4 text-[1.15rem] group-hover:visible group-hover:opacity-100 duration-500 delay-200 absolute top-5.25 -left-[60px] group-hover:left-[24px] transition-all"
+      class="flex gap-3 mr-4 bg-grey p-2 pr-6 rounded-md text-[1.15rem] group-hover:visible group-hover:opacity-100 duration-500 delay-200 absolute -z-5 top-5.25 left-[24px] group-hover:-left-[76px] transition-all item-child"
     >
       <div
         @click="deleteTodo"
@@ -21,6 +18,7 @@
         <fa icon="fa-solid fa-pencil" class="h-3.5" />
       </div>
     </div>
+
     <div @click="toggleTodo" class="flex gap-3 items-center">
       <div
         class="flex justify-center items-center w-6 h-6 rounded transition text-white border-[1px] border-grey box-border"
@@ -38,7 +36,11 @@
         {{ todo.title }}
       </label>
     </div>
-    <div v-if="todo.date" class="bg-light-grey px-3 py-2 radius-md ml-4">
+
+    <div
+      v-if="todo.date"
+      class="min-w-[120px] ml-auto flex justify-center items-center bg-light-grey px-3 py-2 radius-md ml-4"
+    >
       {{ timeConverter(todo.date) }}
     </div>
   </div>
@@ -79,3 +81,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.item-parent {
+  transform-style: preserve-3d;
+}
+.item-child {
+  transform: translateZ(-10px);
+}
+</style>

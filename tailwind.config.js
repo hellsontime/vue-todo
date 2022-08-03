@@ -13,6 +13,7 @@ module.exports = {
       },
       transitionProperty: {
         width: "width",
+        minWidth: "min-width",
       },
     },
     fontFamily: {
